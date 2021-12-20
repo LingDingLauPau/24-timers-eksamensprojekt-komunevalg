@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tilføj</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Tilføj ny Kommunalpolitiker</h1>
+<form>
+    <div><input id="navn" placeholder="Fulde Navn" /></div>
+    <br/>
+    <div><input id="parti-navn" placeholder="Partinavn"></div>
+    <br/>
+    <div><input id="parti-kode" placeholder="Partikode"></div>
+    <br/>
+    <div><input id="stemmer" placeholder="Stemmer"></div>
+    <br/>
+    <a href="index.html">
+    <input type="button" onclick="postKommunalpolitiker();" value="Tilføj">
+    </a>
+
+</form>
+</body>
+<p><a href="/">Annuller</a></p>
+
+<script>
+
+    // Add/POST politiker fra html inputs
+    function postKommunalpolitiker() {
+        fetch('http://localhost:8080/kommunalpolitiker/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: document.getElementById('navn').value,
+                partyName: document.getElementById('parti-navn').value,
+                partyShort: document.getElementById('parti-kode').value,
+                votes: +document.getElementById('stemmer').value
+            })
+        })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            }).catch(Error);
+    }
+
+
+
+
+</script>
+</html>

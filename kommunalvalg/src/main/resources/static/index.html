@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Kommunalvalg</title>
+</head>
+
+<h1>Kommunalpolitikere</h1>
+<p><a class="button" href="add.html">Opret Kommunalpolitiker</a></p>
+<p><a class="button" href="index.html">Opdater resultater</a></p>
+<p><a class="button" href="https://www.kmdvalg.dk/kv/2021/K84713741.htm">Se endelige resultat</a></p>
+<div id="politiker">
+<table class="table">
+    <tr>
+        <th onclick="fetchAllKommunalpolitiker()">ID</th>
+        <th onclick="fetchAllKommunalpolitikerSortedByName()">Navn</th>
+        <th onclick="fetchAllKommunalpolitikerSortedByPartyName()">Partinavn</th>
+        <th onclick="fetchAllKommunalpolitikerSortedByPartyShort()">Partikode</th>
+        <th onclick="fetchAllKommunalpolitikerSortedByVotes()">Stemmer</th>
+        <th>Værktøjer</th>
+    </tr>
+    <tbody id="tbody"></tbody>
+    <tr id="politiker-liste">
+
+    </tr>
+
+</table>
+</div>
+<script>
+
+
+    // jeg har taget udgangspunkt i Fetch API'ets dokumentation
+    // for fecth https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    function fetchAllKommunalpolitiker() {
+        fetch('http://localhost:8080/kommunalpolitiker')
+            .then(function (response) {
+                if(!response.ok){
+                    throw Error("URL not found")
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data)
+                const html = data.map(kommunalpolitikere =>{
+                    return `<tr>
+                                <td>${kommunalpolitikere.id}</td>
+                                <td>${kommunalpolitikere.name}</td>
+                                <td>${kommunalpolitikere.partyName}</td>
+                                <td>${kommunalpolitikere.partyShort}</td>
+                                <td>${kommunalpolitikere.votes}</td>
+                                <td><input type="submit" value="Rediger" onclick="getKommunalpolitiker
+                                (${kommunalpolitikere.id});"/>
+                                <input type="submit" value="Slet" onclick="deleteKommunalpolitiker
+                                (${kommunalpolitikere.id}); window.location.reload();"/></td>
+                            </tr>`
+                }).join("")
+                // har brugt dette som inspiration
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+                document.querySelector('#politiker-liste').insertAdjacentHTML("afterend", html)
+            }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    //jeg har brugt en sort metode fra https://www.codegrepper.com/code-examples/javascript/javascript+sort+array+of+objects
+    function fetchAllKommunalpolitikerSortedByName() {
+        fetch('http://localhost:8080/kommunalpolitiker')
+            .then(function (response) {
+                if(!response.ok){
+                    throw Error("URL not found")
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data)
+                const html = data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)).map(kommunalpolitikere =>{
+                    return `<tr>
+                                <td>${kommunalpolitikere.id}</td>
+                                <td>${kommunalpolitikere.name}</td>
+                                <td>${kommunalpolitikere.partyName}</td>
+                                <td>${kommunalpolitikere.partyShort}</td>
+                                <td>${kommunalpolitikere.votes}</td>
+                                <td><input type="submit" value="Rediger" onclick="getKommunalpolitiker
+                                (${kommunalpolitikere.id});"/>
+                                <input type="submit" value="Slet" onclick="deleteKommunalpolitiker
+                                (${kommunalpolitikere.id}); window.location.reload();"/></td>
+                            </tr>`
+                }).join("")
+                // har brugt dette som inspiration
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+                document.querySelector('#politiker-liste').insertAdjacentHTML("afterend", html)
+            }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    //jeg har brugt en sort metode fra https://www.codegrepper.com/code-examples/javascript/javascript+sort+array+of+objects
+    function fetchAllKommunalpolitikerSortedByPartyName() {
+        fetch('http://localhost:8080/kommunalpolitiker')
+            .then(function (response) {
+                if(!response.ok){
+                    throw Error("URL not found")
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data)
+                const html = data.sort((a,b) => (a.partyName > b.partyName) ? 1 : ((b.partyName > a.partyName) ? -1 : 0)).map(kommunalpolitikere =>{
+                    return `<tr>
+                                <td>${kommunalpolitikere.id}</td>
+                                <td>${kommunalpolitikere.name}</td>
+                                <td>${kommunalpolitikere.partyName}</td>
+                                <td>${kommunalpolitikere.partyShort}</td>
+                                <td>${kommunalpolitikere.votes}</td>
+                                <td><input type="submit" value="Rediger" onclick="getKommunalpolitiker
+                                (${kommunalpolitikere.id});"/>
+                                <input type="submit" value="Slet" onclick="deleteKommunalpolitiker
+                                (${kommunalpolitikere.id}); window.location.reload();"/></td>
+                            </tr>`
+                }).join("")
+                // har brugt dette som inspiration
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+                document.querySelector('#politiker-liste').insertAdjacentHTML("afterend", html)
+            }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    //jeg har brugt en sort metode fra https://www.codegrepper.com/code-examples/javascript/javascript+sort+array+of+objects
+    function fetchAllKommunalpolitikerSortedByPartyShort() {
+        fetch('http://localhost:8080/kommunalpolitiker')
+            .then(function (response) {
+                if(!response.ok){
+                    throw Error("URL not found")
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data)
+                const html = data.sort((a,b) => (a.partyShort > b.partyShort) ? 1 : ((b.partyShort > a.partyShort) ? -1 : 0)).map(kommunalpolitikere =>{
+                    return `<tr>
+                                <td>${kommunalpolitikere.id}</td>
+                                <td>${kommunalpolitikere.name}</td>
+                                <td>${kommunalpolitikere.partyName}</td>
+                                <td>${kommunalpolitikere.partyShort}</td>
+                                <td>${kommunalpolitikere.votes}</td>
+                                <td><input type="submit" value="Rediger" onclick="getKommunalpolitiker
+                                (${kommunalpolitikere.id});"/>
+                                <input type="submit" value="Slet" onclick="deleteKommunalpolitiker
+                                (${kommunalpolitikere.id}); window.location.reload();"/></td>
+                            </tr>`
+                }).join("")
+                // har brugt dette som inspiration
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+                document.querySelector('#politiker-liste').insertAdjacentHTML("afterend", html)
+            }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    //jeg har brugt en sort metode fra https://www.codegrepper.com/code-examples/javascript/javascript+sort+array+of+objects
+    function fetchAllKommunalpolitikerSortedByVotes() {
+        fetch('http://localhost:8080/kommunalpolitiker')
+            .then(function (response) {
+                if(!response.ok){
+                    throw Error("URL not found")
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data)
+                const html = data.sort((a,b) => (a.votes > b.votes) ? 1 : ((b.votes > a.votes) ? -1 : 0)).map(kommunalpolitikere =>{
+                    return `<tr>
+                                <td>${kommunalpolitikere.id}</td>
+                                <td>${kommunalpolitikere.name}</td>
+                                <td>${kommunalpolitikere.partyName}</td>
+                                <td>${kommunalpolitikere.partyShort}</td>
+                                <td>${kommunalpolitikere.votes}</td>
+                                <td><input type="submit" value="Rediger" onclick="getKommunalpolitiker
+                                (${kommunalpolitikere.id});"/>
+                                <input type="submit" value="Slet" onclick="deleteKommunalpolitiker
+                                (${kommunalpolitikere.id}); window.location.reload();"/></td>
+                            </tr>`
+                }).join("")
+                // har brugt dette som inspiration
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+                document.querySelector('#politiker-liste').insertAdjacentHTML("afterend", html)
+            }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    //delete metode der bliver brugt i fetchall for at oprette slet knapper til alle entries
+    function deleteKommunalpolitiker(id) {
+        fetch('http://localhost:8080/kommunalpolitiker/' + id, {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+    }
+
+    //Fetch Alle kommunalpolitikere og sæt dem ind i HTML'en sammen med en funtionel delete knap
+    fetchAllKommunalpolitiker()
+
+</script>
+</body>
+
+</html>

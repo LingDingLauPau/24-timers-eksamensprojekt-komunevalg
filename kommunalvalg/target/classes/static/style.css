@@ -1,0 +1,38 @@
+/*jeg har taget udgangspunkt i en template på css for mit table fra W3Schools https://www.w3schools.com/html/html_tables.asp*/
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+h1{
+    font-family: arial, sans-serif;
+}
+
+p{
+    font-family: arial, sans-serif;
+}
+
+.button {
+    display: block;
+    width: 200px;
+    height: 20px;
+    background: #41c515;
+    color: white;
+    line-height: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+
+
+}
